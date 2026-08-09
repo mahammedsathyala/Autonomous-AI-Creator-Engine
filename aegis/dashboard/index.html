@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS // Cyber Intelligence Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="cyber-container">
+        <!-- Top Terminal Bar -->
+        <header class="cyber-header">
+            <div class="brand-unit">
+                <div class="shield-glitch">🛡️</div>
+                <div class="brand-titles">
+                    <h1>AEGIS // AUTONOMOUS CYBER INTEL</h1>
+                    <p class="sys-sub">Deterministic 5-Dim Scorer // Persistent Belief Engine // RSS Ingestion</p>
+                </div>
+            </div>
+
+            <div class="sys-status-block">
+                <div class="status-badge active">
+                    <span class="blink-led"></span>
+                    <span>SYSTEM ONLINE // AUTONOMOUS ENGINE</span>
+                </div>
+                <div class="persona-tag" id="current-persona-tag">
+                    <span class="icon">👤</span>
+                    <span id="persona-name-display">Ada</span>
+                    <span class="domain" id="persona-domain-display">AI Security</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Command Telemetry Grid -->
+        <div class="telemetry-grid">
+            <div class="telemetry-card">
+                <span class="card-label">PUBLISHED INTEL POSTS</span>
+                <span class="card-val" id="metric-posts">0</span>
+            </div>
+            <div class="telemetry-card">
+                <span class="card-label">EVALUATED RSS TOPICS</span>
+                <span class="card-val" id="metric-evaluated">0</span>
+            </div>
+            <div class="telemetry-card">
+                <span class="card-label">5-DIM ACCEPTANCE RATE</span>
+                <span class="card-val glow-cyan" id="metric-acceptance">0%</span>
+            </div>
+            <div class="telemetry-card">
+                <span class="card-label">ACTIVE BELIEF NODES</span>
+                <span class="card-val glow-purple" id="metric-beliefs">0</span>
+            </div>
+        </div>
+
+        <!-- Schedule & Command Controls -->
+        <div class="control-strip">
+            <div class="timer-unit">
+                <span>AUTONOMOUS SWEEP TICK: </span>
+                <strong id="countdown-val">40s</strong>
+                <div class="track"><div class="fill" id="progress-fill"></div></div>
+            </div>
+
+            <div class="cmd-buttons">
+                <button class="cyber-btn primary" id="btn-force-tick">
+                    <span>⚡ FORCE RESEARCH CYCLE</span>
+                </button>
+                <button class="cyber-btn secondary" id="btn-init-modal">
+                    <span>⚙️ INITIALIZE PERSONA</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Workspace Tabs -->
+        <main class="workspace-main">
+            <nav class="cyber-tabs">
+                <button class="cyber-tab-btn active" data-tab="feed-tab">
+                    <span>📡 PUBLISHED INTEL FEED</span>
+                    <span class="pill" id="feed-badge">0</span>
+                </button>
+                <button class="cyber-tab-btn" data-tab="audit-tab">
+                    <span>⚖️ 5-DIM SCORING AUDIT LOG</span>
+                    <span class="pill warning" id="audit-badge">0</span>
+                </button>
+                <button class="cyber-tab-btn" data-tab="beliefs-tab">
+                    <span>🧠 PERSISTENT BELIEF GRAPH</span>
+                </button>
+                <button class="cyber-tab-btn" data-tab="api-tab">
+                    <span>🔌 EVALUATOR API SPECS</span>
+                </button>
+            </nav>
+
+            <!-- TAB 1: Live Post Feed -->
+            <section class="tab-panel active" id="feed-tab">
+                <div id="posts-container" class="posts-stream">
+                    <div class="terminal-msg">Initializing AEGIS intel stream...</div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Scoring Audit Log -->
+            <section class="tab-panel" id="audit-tab">
+                <div class="panel-desc">Showing deterministic 5-dimensional evaluation scores and explicit rejections.</div>
+                <div id="audit-container" class="audit-stream">
+                    <div class="terminal-msg">Loading decision logs...</div>
+                </div>
+            </section>
+
+            <!-- TAB 3: Belief Graph -->
+            <section class="tab-panel" id="beliefs-tab">
+                <div class="panel-desc">Persistent agent beliefs categorized by FACT, CLAIM, INFERENCE, or UNCERTAINTY.</div>
+                <div id="beliefs-container" class="beliefs-grid">
+                    <div class="terminal-msg">Loading belief graph...</div>
+                </div>
+            </section>
+
+            <!-- TAB 4: API Specs -->
+            <section class="tab-panel" id="api-tab">
+                <div class="api-spec-box">
+                    <h3>POST /api/agent/init</h3>
+                    <p>Called exactly once by evaluator to initialize agent persona.</p>
+                    <pre><code>curl -X POST http://localhost:8000/api/agent/init \
+  -H "Content-Type: application/json" \
+  -d '{"persona": {"name": "Ada", "domain": "AI Security"}}'</code></pre>
+
+                    <h3>GET /api/agent/feed?agentId=&lt;id&gt;</h3>
+                    <p>Evaluator queries published posts in reverse chronological order.</p>
+                    <pre><code id="curl-feed-cmd">curl http://localhost:8000/api/agent/feed?agentId=ada-sec-8f2a</code></pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Persona Initialization -->
+    <div class="cyber-modal-overlay" id="init-modal">
+        <div class="cyber-modal">
+            <div class="modal-hdr">
+                <h3>INITIALIZE AEGIS PERSONA</h3>
+                <button class="close-btn" id="btn-close-modal">&times;</button>
+            </div>
+            <form id="init-form">
+                <div class="field-grp">
+                    <label>PERSONA NAME</label>
+                    <input type="text" id="input-name" value="Ada" required>
+                </div>
+                <div class="field-grp">
+                    <label>TARGET DOMAIN</label>
+                    <input type="text" id="input-domain" value="AI Security" required>
+                </div>
+                <button type="submit" class="cyber-btn primary block">SEND POST /api/agent/init</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

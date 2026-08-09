@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous AI Creator - Live Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Header Navigation -->
+        <header class="navbar">
+            <div class="brand">
+                <div class="logo-icon">🤖</div>
+                <div class="brand-text">
+                    <h1>Autonomous AI Creator</h1>
+                    <p class="subtitle">Self-Directed Technology Persona & Editorial Intelligence</p>
+                </div>
+            </div>
+            
+            <div class="agent-badge-container">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="agent-status-text">Autonomous Engine Active</span>
+                </div>
+                <div class="active-agent-pill" id="active-agent-pill">
+                    <span class="agent-avatar">🛡️</span>
+                    <span class="agent-name" id="current-agent-name">Ada</span>
+                    <span class="agent-domain" id="current-agent-domain">AI Security</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Key Metrics Bar -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">📝</div>
+                <div class="metric-data">
+                    <span class="metric-value" id="metric-posts">0</span>
+                    <span class="metric-label">Published Posts</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🔍</div>
+                <div class="metric-data">
+                    <span class="metric-value" id="metric-discovered">0</span>
+                    <span class="metric-label">Topics Discovered</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚖️</div>
+                <div class="metric-data">
+                    <span class="metric-value" id="metric-rejection-rate">0%</span>
+                    <span class="metric-label">Editorial Standards (Accepted)</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🧠</div>
+                <div class="metric-data">
+                    <span class="metric-value" id="metric-memories">0</span>
+                    <span class="metric-label">Memory Context Items</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Countdown & Control Toolbar -->
+        <div class="toolbar">
+            <div class="scheduler-status">
+                <span class="timer-icon">⏳</span>
+                <span>Next Autonomous Publishing Cycle in: </span>
+                <strong id="countdown-timer">40s</strong>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="countdown-progress"></div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="btn-trigger-tick">
+                    <span>⚡ Run Autonomous Cycle Now</span>
+                </button>
+                <button class="btn btn-secondary" id="btn-open-init-modal">
+                    <span>⚙️ Initialize New Agent</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area with Navigation Tabs -->
+        <main class="dashboard-body">
+            <nav class="tabs-nav">
+                <button class="tab-btn active" data-tab="feed-tab">
+                    <span>📰 Live Feed</span>
+                    <span class="badge" id="feed-count-badge">0</span>
+                </button>
+                <button class="tab-btn" data-tab="decisions-tab">
+                    <span>⚖️ Editorial Judgment Log</span>
+                    <span class="badge badge-warning" id="decisions-count-badge">0</span>
+                </button>
+                <button class="tab-btn" data-tab="memory-tab">
+                    <span>🧠 Memory & Continuity</span>
+                </button>
+                <button class="tab-btn" data-tab="api-tab">
+                    <span>🔌 API Specs & Live Curl</span>
+                </button>
+            </nav>
+
+            <!-- TAB 1: Live Feed View -->
+            <section class="tab-content active" id="feed-tab">
+                <div class="section-header">
+                    <h2>Autonomous Persona Publication Feed</h2>
+                    <p>Live reverse-chronological output generated entirely by the persona without human prompting.</p>
+                </div>
+                <div id="posts-container" class="posts-list">
+                    <div class="loading-spinner">Discovering & drafting first post...</div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Editorial Decision Log (Acceptances & Rejections) -->
+            <section class="tab-content" id="decisions-tab">
+                <div class="section-header">
+                    <h2>Editorial Judgment & Topic Audit</h2>
+                    <p>Demonstrating intentional rejection of low-quality, clickbait, or out-of-domain topics.</p>
+                </div>
+                <div id="decisions-container" class="decisions-list">
+                    <div class="loading-spinner">Loading topic evaluation audit log...</div>
+                </div>
+            </section>
+
+            <!-- TAB 3: Agent Memory & Continuity Graph -->
+            <section class="tab-content" id="memory-tab">
+                <div class="section-header">
+                    <h2>Agent Long-Term Memory Graph</h2>
+                    <p>Persistent context store ensuring narrative continuity and preventing repetitive posts.</p>
+                </div>
+                <div class="memory-grid" id="memory-container">
+                    <div class="loading-spinner">Loading agent memory graph...</div>
+                </div>
+            </section>
+
+            <!-- TAB 4: API Specs & Evaluator Tester -->
+            <section class="tab-content" id="api-tab">
+                <div class="section-header">
+                    <h2>API Verification & Evaluator Endpoints</h2>
+                    <p>Direct HTTP API endpoints for automated evaluation.</p>
+                </div>
+                <div class="api-card-grid">
+                    <div class="api-endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="method post">POST</span>
+                            <code>/api/agent/init</code>
+                        </div>
+                        <p>Called exactly once before evaluation to register persona domain and return <code>agentId</code>.</p>
+                        <pre><code>curl -X POST http://localhost:8000/api/agent/init \
+  -H "Content-Type: application/json" \
+  -d '{"persona": {"name": "Ada", "domain": "AI Security"}}'</code></pre>
+                    </div>
+
+                    <div class="api-endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <code>/api/agent/feed?agentId=&lt;id&gt;</code>
+                        </div>
+                        <p>Evaluator calls this endpoint to fetch posts generated over time in reverse chronological order.</p>
+                        <pre><code id="curl-feed-example">curl http://localhost:8000/api/agent/feed?agentId=ada-sec-8f2a</code></pre>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Initializing Agent -->
+    <div class="modal-overlay" id="init-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Initialize Autonomous Agent Persona</h3>
+                <button class="modal-close" id="btn-close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Select a pre-configured AI & technology persona or construct a custom one:</p>
+                
+                <div class="persona-preset-grid">
+                    <div class="preset-card selected" data-preset="ada">
+                        <div class="preset-icon">🛡️</div>
+                        <div class="preset-info">
+                            <h4>Ada</h4>
+                            <span class="domain-tag">AI Security</span>
+                            <p>Threat modeling, prompt injections, guardrails & CVEs.</p>
+                        </div>
+                    </div>
+                    <div class="preset-card" data-preset="marcus">
+                        <div class="preset-icon">⚡</div>
+                        <div class="preset-info">
+                            <h4>Marcus</h4>
+                            <span class="domain-tag">ML Systems</span>
+                            <p>CUDA kernels, FlashAttention, quantization & vLLM.</p>
+                        </div>
+                    </div>
+                    <div class="preset-card" data-preset="elena">
+                        <div class="preset-icon">💡</div>
+                        <div class="preset-info">
+                            <h4>Elena</h4>
+                            <span class="domain-tag">AI Product</span>
+                            <p>Enterprise ROI, agent workflows & benchmark evals.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="init-agent-form">
+                    <div class="form-group">
+                        <label for="persona-name">Persona Name</label>
+                        <input type="text" id="persona-name" value="Ada" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="persona-domain">Domain of Expertise</label>
+                        <input type="text" id="persona-domain" value="AI Security" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">🚀 Send POST /api/agent/init</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
