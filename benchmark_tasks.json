@@ -1,0 +1,30 @@
+[
+  {
+    "id": "BM-001",
+    "name": "Build CRUD API",
+    "prompt": "Build a FastAPI CRUD API with SQLite database for student attendance management.",
+    "expected_files": ["app.py", "requirements.txt", "README.md"],
+    "target_pass_rate": 100.0
+  },
+  {
+    "id": "BM-002",
+    "name": "Build Authentication System",
+    "prompt": "Build a JWT authentication service with user registration and password hashing.",
+    "expected_files": ["app.py", "requirements.txt", "README.md"],
+    "target_pass_rate": 100.0
+  },
+  {
+    "id": "BM-003",
+    "name": "Build Student Management System",
+    "prompt": "Build a student enrollment and attendance tracking system with REST endpoints and SQLite database.",
+    "expected_files": ["app.py", "requirements.txt", "README.md"],
+    "target_pass_rate": 100.0
+  },
+  {
+    "id": "BM-004",
+    "name": "Self-Repair Test Failure",
+    "prompt": "Generate and execute test suite, detect intentional failure, repair code, and re-verify.",
+    "expected_files": ["app.py", "test_app.py"],
+    "target_pass_rate": 100.0
+  }
+]

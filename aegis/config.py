@@ -2,7 +2,7 @@ import os
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    APP_NAME: str = "AEGIS Cyber Intelligence Autonomous Creator"
+    APP_NAME: str = "AEGIS Autonomous AI Software Engineering Engine"
     DEBUG: bool = True
     DATABASE_URL: str = f"sqlite:///{os.path.join(os.path.dirname(__file__), 'data', 'aegis.db')}"
     
@@ -14,17 +14,23 @@ class Settings(BaseSettings):
     PUBLISH_THRESHOLD: float = 75.0
     HOLD_THRESHOLD: float = 60.0
     
-    # Scoring Dimension Weights (Total = 1.0)
-    WEIGHT_SECURITY_IMPACT: float = 0.30
-    WEIGHT_NOVELTY: float = 0.20
-    WEIGHT_EVIDENCE_QUALITY: float = 0.20
-    WEIGHT_AI_RELEVANCE: float = 0.20
-    WEIGHT_RESEARCH_VALUE: float = 0.10
+    # LLM Provider Selection: 'deterministic', 'openai', 'groq', 'anthropic', 'gemini', 'watsonx'
+    LLM_PROVIDER: str = "deterministic"
+    LLM_MODEL: str = "gpt-4o-mini"
     
-    # LLM API Keys (optional; fallback engine used if unconfigured)
+    # LLM API Keys
     OPENAI_API_KEY: str = ""
+    GROQ_API_KEY: str = ""
     ANTHROPIC_API_KEY: str = ""
     GEMINI_API_KEY: str = ""
+    WATSONX_API_KEY: str = ""
+    WATSONX_URL: str = ""
+    WATSONX_PROJECT_ID: str = ""
+
+    # Execution Sandbox Settings
+    SANDBOX_TIMEOUT_SECONDS: int = 30
+    SANDBOX_MAX_MEMORY_MB: int = 512
+    SANDBOX_WORK_DIR: str = os.path.join(os.path.dirname(__file__), "sandbox_workspace")
 
     class Config:
         env_file = ".env"

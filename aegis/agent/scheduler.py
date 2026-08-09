@@ -16,7 +16,6 @@ class AegisScheduler:
 
     def register_agent(self, agent_id: str, name: str = "Ada", domain: str = "AI Security"):
         self.active_agents[agent_id] = {"name": name, "domain": domain}
-        # Run immediate initial cycle
         db = SessionLocal()
         try:
             run_research_cycle(db, agent_id, name, domain)
@@ -35,7 +34,6 @@ class AegisScheduler:
         self.running = True
         print(f"[Scheduler] Background loop started. First delay: {settings.FIRST_CYCLE_DELAY_SECONDS}s, Interval: {settings.CYCLE_INTERVAL_SECONDS}s")
         
-        # Restore agents from DB
         db = SessionLocal()
         try:
             agents = restore_agents(db)
@@ -58,4 +56,5 @@ class AegisScheduler:
             except Exception as e:
                 print(f"[Scheduler] Error during loop tick: {e}")
 
-aegis_scheduler = AegisScheduler()
+global_scheduler = AegisScheduler()
+aegis_scheduler = global_scheduler
