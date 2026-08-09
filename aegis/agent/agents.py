@@ -1,5 +1,6 @@
 import json
 import re
+import sys
 from typing import Dict, Any, List, Optional
 from sqlalchemy.orm import Session
 from aegis.llm_client import llm_client
@@ -118,8 +119,8 @@ class TestAgent:
         )
         tool_registry.write_file(db, project_id, "TestAgent", "test_app.py", test_code)
         
-        # Execute tests
-        res = tool_registry.run_command(db, project_id, "TestAgent", "python test_app.py")
+        # Execute tests using current python executable
+        res = tool_registry.run_command(db, project_id, "TestAgent", f'"{sys.executable}" test_app.py')
         return res
 
 class ReviewerAgent:
