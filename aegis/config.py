@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     HOLD_THRESHOLD: float = 60.0
     
     # LLM Provider Selection: 'deterministic', 'openai', 'groq', 'anthropic', 'gemini', 'watsonx'
-    LLM_PROVIDER: str = "deterministic"
+    LLM_PROVIDER: str = "openai"
     LLM_MODEL: str = "gpt-4o-mini"
     
     # LLM API Keys
@@ -33,7 +33,10 @@ class Settings(BaseSettings):
     SANDBOX_WORK_DIR: str = os.path.join(os.path.dirname(__file__), "sandbox_workspace")
 
     class Config:
-        env_file = ".env"
+        env_file = (os.path.join(os.path.dirname(__file__), ".env"), ".env")
         extra = "ignore"
 
 settings = Settings()
+
+if settings.OPENAI_API_KEY and settings.LLM_PROVIDER == "deterministic":
+    settings.LLM_PROVIDER = "openai"

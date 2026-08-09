@@ -21,6 +21,11 @@ wheels/
 .installed.cfg
 *.egg
 
+# Secrets & Environment Files
+.env
+*.env
+aegis/.env
+
 # Virtual environments
 venv/
 ENV/
@@ -30,6 +35,7 @@ ENV/
 *.db
 agent_storage.db
 aegis/data/*.db
+aegis/sandbox_workspace/
 
 # IDE & OS files
 .vscode/
